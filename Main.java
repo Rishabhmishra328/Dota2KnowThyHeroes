@@ -12,8 +12,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 public class Main extends ActionBarActivity {
@@ -86,7 +91,7 @@ public class Main extends ActionBarActivity {
 
     public static class typeFragement extends Fragment{
 
-        private GridView grid ;
+        private ListView heroesLV ;
 
         public static typeFragement getInstance(int position){
             typeFragement fragment = new typeFragement();
@@ -100,10 +105,25 @@ public class Main extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             View layout = inflater.inflate(R.layout.lists,container,false);
-            grid = (GridView) layout.findViewById(R.id.heroesList);
+            heroesLV = (ListView) layout.findViewById(R.id.heroesList);
             Bundle bundle = getArguments();
 
             if(bundle != null){
+
+                switch (bundle.getInt("type")){
+                    case 0:
+                            ArrayAdapter<String> strengthAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.strength_heroes));
+                            heroesLV.setAdapter(strengthAdapter);
+                            break;
+                    case 1:
+                        ArrayAdapter<String> agilityAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.agility_heroes));
+                        heroesLV.setAdapter(agilityAdapter);
+                        break;
+                    case 2:
+                        ArrayAdapter<String> intelligenceAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.intelligence_heroes));
+                        heroesLV.setAdapter(intelligenceAdapter);
+                        break;
+                }
 
             }
 
