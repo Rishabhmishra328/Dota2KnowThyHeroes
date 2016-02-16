@@ -19,11 +19,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class Main extends ActionBarActivity {
 
-    private ViewPager pager ;
+    private ViewPager pager;
     private SlidingTabLayout tabLayout;
 
 
@@ -37,8 +38,6 @@ public class Main extends ActionBarActivity {
         pager.setAdapter(new pagerAdapter(getSupportFragmentManager()));
         tabLayout = (SlidingTabLayout) findViewById(R.id.tabs);
         tabLayout.setViewPager(pager);
-
-
 
 
     }
@@ -64,9 +63,10 @@ public class Main extends ActionBarActivity {
     }
 
     //Pager Adapter
-    class pagerAdapter extends FragmentPagerAdapter{
+    class pagerAdapter extends FragmentPagerAdapter {
 
         String[] tabs;
+
         public pagerAdapter(FragmentManager fm) {
             super(fm);
             tabs = getResources().getStringArray(R.array.type);
@@ -89,14 +89,14 @@ public class Main extends ActionBarActivity {
         }
     }
 
-    public static class typeFragement extends Fragment{
+    public static class typeFragement extends Fragment {
 
-        private ListView heroesLV ;
+        private ListView heroesLV;
 
-        public static typeFragement getInstance(int position){
+        public static typeFragement getInstance(int position) {
             typeFragement fragment = new typeFragement();
             Bundle args = new Bundle();
-            args.putInt("type",position);
+            args.putInt("type", position);
             fragment.setArguments(args);
             return fragment;
         }
@@ -104,23 +104,29 @@ public class Main extends ActionBarActivity {
         @Nullable
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            View layout = inflater.inflate(R.layout.lists,container,false);
+            View layout = inflater.inflate(R.layout.lists, container, false);
             heroesLV = (ListView) layout.findViewById(R.id.heroesList);
             Bundle bundle = getArguments();
 
-            if(bundle != null){
+            if (bundle != null) {
 
-                switch (bundle.getInt("type")){
+                switch (bundle.getInt("type")) {
                     case 0:
-                            ArrayAdapter<String> strengthAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.strength_heroes));
-                            heroesLV.setAdapter(strengthAdapter);
-                            break;
+                        String[] sHeroes = getResources().getStringArray(R.array.strength_heroes);
+                        Arrays.sort(sHeroes);
+                        ArrayAdapter<String> strengthAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, sHeroes);
+                        heroesLV.setAdapter(strengthAdapter);
+                        break;
                     case 1:
-                        ArrayAdapter<String> agilityAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.agility_heroes));
+                        String[] aHeroes = getResources().getStringArray(R.array.agility_heroes);
+                        Arrays.sort(aHeroes);
+                        ArrayAdapter<String> agilityAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, aHeroes);
                         heroesLV.setAdapter(agilityAdapter);
                         break;
                     case 2:
-                        ArrayAdapter<String> intelligenceAdapter = new ArrayAdapter<String>(getContext(),android.R.layout.simple_list_item_1,getResources().getStringArray(R.array.intelligence_heroes));
+                        String[] iHeroes = getResources().getStringArray(R.array.intelligence_heroes);
+                        Arrays.sort(iHeroes);
+                        ArrayAdapter<String> intelligenceAdapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_list_item_1, iHeroes);
                         heroesLV.setAdapter(intelligenceAdapter);
                         break;
                 }
