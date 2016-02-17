@@ -1,6 +1,7 @@
 package com.echo.primestudio.dota2knowthyheroes;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
+import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,16 +20,20 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
-
-import static com.echo.primestudio.dota2knowthyheroes.R.drawable.rubick;
 
 public class Main extends ActionBarActivity {
 
     private ViewPager pager;
-    private SlidingTabLayout tabLayout;
-    public static View heroPreview;
+    public static SlidingTabLayout tabLayout;
+    public static ScrollView heroPreview;
+
+    public static View skillTemplate;
+
+    public static String prevHero;
 
     public static String[] skillDesc, skillSpec, skillNames;
     public static int[] skillIcons;
@@ -37,6 +44,8 @@ public class Main extends ActionBarActivity {
 
     public static Context applicationContext;
 
+    public static LinearLayout heroIntro;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,10 +53,14 @@ public class Main extends ActionBarActivity {
         setContentView(R.layout.main_layout);
 
         //Declaration
-        heroPreview = findViewById(R.id.hero_preview);
+        heroPreview = (ScrollView) findViewById(R.id.hero_preview);
         heroLore = (TextView) findViewById(R.id.hero_lore);
         heroImage = (ImageView) findViewById(R.id.hero_image);
-        skillLV = (ListView) findViewById(R.id.skill_list);
+        heroIntro = (LinearLayout) findViewById(R.id.hero_introduction);
+
+        if (skillTemplate == null){
+            Log.d("SKILLTEMPLATE"," FROM MAIN IS NULL");
+        }
 
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new pagerAdapter(getSupportFragmentManager()));
@@ -64,7 +77,7 @@ public class Main extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         if (isPanelShown()) {
-            heroPreview.setVisibility(View.GONE);
+            slideIn();
         } else
             super.onBackPressed();
     }
@@ -92,17 +105,19 @@ public class Main extends ActionBarActivity {
     public static void slideIn() {
         if (!isPanelShown()) {
             // Show the panel
-            Animation bottomUp = AnimationUtils.loadAnimation(applicationContext,
+            Animation rightIn = AnimationUtils.loadAnimation(applicationContext,
                     R.anim.right_in);
 
-            heroPreview.startAnimation(bottomUp);
+            heroPreview.startAnimation(rightIn);
+            tabLayout.setVisibility(View.GONE);
             heroPreview.setVisibility(View.VISIBLE);
         } else {
             // Hide the Panel
-            Animation bottomDown = AnimationUtils.loadAnimation(applicationContext,
+            Animation rightOut = AnimationUtils.loadAnimation(applicationContext,
                     R.anim.right_out);
 
-            heroPreview.startAnimation(bottomDown);
+            heroPreview.startAnimation(rightOut);
+            tabLayout.setVisibility(View.VISIBLE);
             heroPreview.setVisibility(View.GONE);
         }
     }
@@ -297,14 +312,45 @@ public class Main extends ActionBarActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     slideIn();
 
+
                     TextView heroName = (TextView) view.findViewById(R.id.hero_name);
                     String hero = (String) heroName.getText();
 
+                    if (prevHero != hero) {
+                        heroPreview.scrollTo(0, 0);
+                    }
+
+                    prevHero = hero;
+
                     getHeroDetails(hero);
 
-                    skillAdapter sAdapter = new skillAdapter(getContext(),skillNames,skillIcons,skillDesc,skillSpec);
-                    skillLV.setAdapter(sAdapter);
+                    for(int i = 0 ; i < skillNames.length ; i ++) {
 
+                        if (skillTemplate == null){
+
+                            Log.d("SKILLTEMPLATE", " IS NULL");
+                        }
+
+                        LayoutInflater layoutInflater = (LayoutInflater)  applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        skillTemplate = layoutInflater.inflate(R.layout.skill_template, heroIntro, false);
+
+                        ImageView skillIV = (ImageView) skillTemplate.findViewById(R.id.skill_image);
+                        TextView skillNameTV = (TextView) skillTemplate.findViewById(R.id.skill_name);
+                        TextView skillDesTV = (TextView) skillTemplate.findViewById(R.id.skill_description);
+                        TextView skillSpecTV = (TextView) skillTemplate.findViewById(R.id.skill_specifications);
+
+                        skillIV.setImageResource(skillIcons[i]);
+                        skillNameTV.setText(skillNames[i]);
+                        skillDesTV.setText(skillDesc[i]);
+                        skillSpecTV.setText(skillSpec[i]);
+
+                        skillDesTV.setTextColor(Color.BLACK);
+                        skillNameTV.setTextColor(Color.BLACK);
+                        skillSpecTV.setTextColor(Color.BLACK);
+
+                        heroIntro.addView(skillTemplate);
+
+                    }
 
                 }
             });
@@ -318,7 +364,13 @@ public class Main extends ActionBarActivity {
         switch (hero) {
             case "Rubick":
                 heroImage.setImageResource(R.drawable.rubick);
-                heroLore.setText("HERO LORE SET");
+                heroLore.setText("Any mage can cast a spell or two, and a few may even study long enough to become a wizard, but only the most talented are allowed to be recognized as a Magus. Yet as with any sorcerer’s circle, a sense of community has never guaranteed competitive courtesy.\n" +
+                        "Already a renowned duelist and scholar of the grander world of sorcery, it had never occurred to Rubick that he might perhaps be Magus material until he was in the midst of his seventh assassination attempt. As he casually tossed the twelfth of a string of would-be killers from a high balcony, it dawned on him how utterly unimaginative the attempts on his life had become. Where once the interruption of a fingersnap or firehand might have put a cheerful spring in his step, it had all become so very predictable. He craved greater competition. Therefore, donning his combat mask, he did what any wizard seeking to ascend the ranks would do: he announced his intention to kill a Magus.\n" +
+                        "\n" +
+                        "Rubick quickly discovered that to threaten one Magus is to threaten them all, and they fell upon him in force. Each antagonist's spell was an unstoppable torrent of energy, and every attack a calculated killing blow. But very soon something occurred that Rubick's foes found unexpected: their arts appeared to turn against them. Inside the magic maelstrom, Rubick chuckled, subtly reading and replicating the powers of one in order to cast it against another, sowing chaos among those who had allied against him. Accusations of betrayal began to fly, and soon the sorcerers turned one upon another without suspecting who was behind their undoing.\n" +
+                        "\n" +
+                        "When the battle finally drew to a close, all were singed and frozen, soaked and cut and pierced. More than one lay dead by an ally’s craft. Rubick stood apart, sore but delighted in the week’s festivities. None had the strength to argue when he presented his petition of assumption to the Hidden Council, and the Insubstantial Eleven agreed as one to grant him the title of Grand Magus.\n" +
+                        "\n");
                 skillIcons = new int[]{R.drawable.telekinesis_icon, R.drawable.telekinesis_land_icon, R.drawable.fade_bolt_icon, R.drawable.null_field_icon, R.drawable.spell_steal_icon};
                 skillNames = new String[]{"Telekinesis", "Telekinesis Land", "Fade Bolt", "Null Field", "Spell Steal"};
                 skillDesc = new String[]{"Rubick uses his telekinetic powers to lift the enemy into the air briefly and then hurls them back at the ground. The unit lands on the ground with such force that it stuns nearby enemies.", "Chooses the location the target will land when Telekinesis finishes.", "Rubick creates a powerful stream of arcane energy that travels between enemy units, dealing damage and reducing their attack damage. Each jump deals less damage.", "Rubick's mastery of the arcane protects nearby allies against weaker magics, granting them magic resistance.", "Rubick studies the trace magical essence of one enemy hero, learning the secrets of the last spell the hero cast. Rubick can use this spell as his own for several minutes or until he dies. Upgradable by Aghanim's Scepter."};
