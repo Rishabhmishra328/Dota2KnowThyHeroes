@@ -1,6 +1,7 @@
 package com.echo.primestudio.dota2knowthyheroes;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -46,6 +47,8 @@ public class Main extends ActionBarActivity {
 
     public static LinearLayout heroIntro;
 
+    public static Resources appResource;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +61,8 @@ public class Main extends ActionBarActivity {
         heroImage = (ImageView) findViewById(R.id.hero_image);
         heroIntro = (LinearLayout) findViewById(R.id.hero_introduction);
 
-        if (skillTemplate == null){
-            Log.d("SKILLTEMPLATE"," FROM MAIN IS NULL");
+        if (skillTemplate == null) {
+            Log.d("SKILLTEMPLATE", " FROM MAIN IS NULL");
         }
 
         pager = (ViewPager) findViewById(R.id.pager);
@@ -70,6 +73,10 @@ public class Main extends ActionBarActivity {
         //Setting Context
         Context appContext = getApplicationContext();
         applicationContext = appContext;
+
+        //Setting resources
+        Resources res = getResources();
+        appResource = res;
 
 
     }
@@ -324,14 +331,14 @@ public class Main extends ActionBarActivity {
 
                     getHeroDetails(hero);
 
-                    for(int i = 0 ; i < skillNames.length ; i ++) {
+                    for (int i = 0; i < skillNames.length; i++) {
 
-                        if (skillTemplate == null){
+                        if (skillTemplate == null) {
 
                             Log.d("SKILLTEMPLATE", " IS NULL");
                         }
 
-                        LayoutInflater layoutInflater = (LayoutInflater)  applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                        LayoutInflater layoutInflater = (LayoutInflater) applicationContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                         skillTemplate = layoutInflater.inflate(R.layout.skill_template, heroIntro, false);
 
                         ImageView skillIV = (ImageView) skillTemplate.findViewById(R.id.skill_image);
@@ -344,9 +351,9 @@ public class Main extends ActionBarActivity {
                         skillDesTV.setText(skillDesc[i]);
                         skillSpecTV.setText(skillSpec[i]);
 
-                        skillDesTV.setTextColor(Color.BLACK);
-                        skillNameTV.setTextColor(Color.BLACK);
-                        skillSpecTV.setTextColor(Color.BLACK);
+                        skillDesTV.setTextColor(Color.DKGRAY);
+                        skillNameTV.setTextColor(Color.DKGRAY);
+                        skillSpecTV.setTextColor(Color.DKGRAY);
 
                         heroIntro.addView(skillTemplate);
 
@@ -361,45 +368,343 @@ public class Main extends ActionBarActivity {
 
     public static void getHeroDetails(String hero) {
 
+        skillIcons = null;
+
         switch (hero) {
+            case "Ancient Apparition":
+                heroImage.setImageResource(R.drawable.ancient_apparition);
+                heroLore.setText(appResource.getString(R.string.ancient_apparition_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.cold_feet_icon, R.drawable.ice_vortex_icon, R.drawable.chilling_touch_icon, R.drawable.ice_blast_icon, R.drawable.release_icon};
+                skillNames = appResource.getStringArray(R.array.ancient_apparition_skill_names);
+                skillDesc = appResource.getStringArray(R.array.ancient_apparition_skill_description);
+                skillSpec = appResource.getStringArray(R.array.ancient_apparition_skills_specifications);
+                break;
+            case "Bane":
+                heroImage.setImageResource(R.drawable.bane);
+                heroLore.setText(appResource.getString(R.string.bane_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.enfeeble_icon, R.drawable.brain_sap_icon, R.drawable.nightmare_icon, R.drawable.fiends_grip_icon, R.drawable.nightmare_end_icon};
+                skillNames = appResource.getStringArray(R.array.bane_skill_names);
+                skillDesc = appResource.getStringArray(R.array.bane_skill_description);
+                skillSpec = appResource.getStringArray(R.array.bane_skills_specifications);
+                break;
+            case "Batrider":
+                heroImage.setImageResource(R.drawable.batrider);
+                heroLore.setText(appResource.getString(R.string.batrider_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.sticky_napalm_icon, R.drawable.flamebreak_icon, R.drawable.firefly_icon, R.drawable.flaming_lasso_icon};
+                skillNames = appResource.getStringArray(R.array.batrider_skill_names);
+                skillDesc = appResource.getStringArray(R.array.batrider_skill_description);
+                skillSpec = appResource.getStringArray(R.array.batrider_skills_specifications);
+                break;
+            case "Chen":
+                heroImage.setImageResource(R.drawable.chen);
+                heroLore.setText(appResource.getString(R.string.chen_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.arcane_orb_icon, R.drawable.astral_imprisonment_icon, R.drawable.essence_aura_icon, R.drawable.sanitys_eclipse_icon};
+                skillNames = appResource.getStringArray(R.array.outworld_devourer_skill_names);
+                skillDesc = appResource.getStringArray(R.array.outworld_devourer_skill_description);
+                skillSpec = appResource.getStringArray(R.array.outworld_devourer_skills_specifications);
+                break;
+            case "Crystal Maiden":
+                heroImage.setImageResource(R.drawable.crystal_maiden);
+                heroLore.setText(appResource.getString(R.string.crystal_maiden_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.crystal_nova_icon, R.drawable.frostbite_icon, R.drawable.arcane_aura_icon, R.drawable.freezing_field_icon};
+                skillNames = appResource.getStringArray(R.array.crystal_maiden_skill_names);
+                skillDesc = appResource.getStringArray(R.array.crystal_maiden_skill_description);
+                skillSpec = appResource.getStringArray(R.array.crystal_maiden_skills_specifications);
+                break;
+            case "Dark Seer":
+                heroImage.setImageResource(R.drawable.dark_seer);
+                heroLore.setText(appResource.getString(R.string.dark_seer_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.vacuum_icon, R.drawable.ion_shell_icon, R.drawable.surge_icon, R.drawable.wall_of_replica_icon};
+                skillNames = appResource.getStringArray(R.array.dark_seer_skill_names);
+                skillDesc = appResource.getStringArray(R.array.dark_seer_skill_description);
+                skillSpec = appResource.getStringArray(R.array.dark_seer_skills_specifications);
+                break;
+            case "Dazzle":
+                heroImage.setImageResource(R.drawable.dazzle);
+                heroLore.setText(appResource.getString(R.string.dazzle_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.poison_touch_icon, R.drawable.shallow_grave_icon, R.drawable.shadow_wave_icon, R.drawable.weave_icon};
+                skillNames = appResource.getStringArray(R.array.dazzle_skill_names);
+                skillDesc = appResource.getStringArray(R.array.dazzle_skill_description);
+                skillSpec = appResource.getStringArray(R.array.dazzle_skills_specifications);
+                break;
+            case "Death Prophet":
+                heroImage.setImageResource(R.drawable.death_prophet);
+                heroLore.setText(appResource.getString(R.string.death_prophet_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.crypt_swarm_icon, R.drawable.silence_icon, R.drawable.spirit_siphon_icon, R.drawable.exorcism_icon};
+                skillNames = appResource.getStringArray(R.array.death_prophet_skill_names);
+                skillDesc = appResource.getStringArray(R.array.death_prophet_skill_description);
+                skillSpec = appResource.getStringArray(R.array.death_prophet_skills_specifications);
+                break;
+            case "Disruptor":
+                heroImage.setImageResource(R.drawable.disruptor);
+                heroLore.setText(appResource.getString(R.string.disruptor_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.thunder_strike_icon, R.drawable.glimpse_icon, R.drawable.kinetic_field_icon, R.drawable.static_storm_icon};
+                skillNames = appResource.getStringArray(R.array.disruptor_skill_names);
+                skillDesc = appResource.getStringArray(R.array.disruptor_skill_description);
+                skillSpec = appResource.getStringArray(R.array.disruptor_skills_specifications);
+                break;
+            case "Enchantress":
+                heroImage.setImageResource(R.drawable.enchantress);
+                heroLore.setText(appResource.getString(R.string.enchantress_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.untouchable_icon, R.drawable.enchant_icon, R.drawable.natures_attendants_icon, R.drawable.impetus_icon};
+                skillNames = appResource.getStringArray(R.array.enchantress_skill_names);
+                skillDesc = appResource.getStringArray(R.array.enchantress_skill_description);
+                skillSpec = appResource.getStringArray(R.array.enchantress_skills_specifications);
+                break;
+            case "Enigma":
+                heroImage.setImageResource(R.drawable.enigma);
+                heroLore.setText(appResource.getString(R.string.enigma_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.malefice_icon, R.drawable.demonic_conversion_icon, R.drawable.midnight_pulse_icon, R.drawable.black_hole_icon};
+                skillNames = appResource.getStringArray(R.array.enigma_skill_names);
+                skillDesc = appResource.getStringArray(R.array.enigma_skill_description);
+                skillSpec = appResource.getStringArray(R.array.enigma_skills_specifications);
+                break;
+            case "Invoker":
+                heroImage.setImageResource(R.drawable.invoker);
+                heroLore.setText(appResource.getString(R.string.invoker_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.quas_icon, R.drawable.wex_icon, R.drawable.exort_icon, R.drawable.invoke_icon, R.drawable.cold_snap_icon, R.drawable.ghost_walk_icon, R.drawable.tornado_icon, R.drawable.emp_icon, R.drawable.alacrity_icon, R.drawable.chaos_meteor_icon, R.drawable.sun_strike_icon, R.drawable.forge_spirit_icon, R.drawable.ice_wall_icon, R.drawable.deafening_blast_icon};
+                skillNames = appResource.getStringArray(R.array.invoker_skill_names);
+                skillDesc = appResource.getStringArray(R.array.invoker_skill_description);
+                skillSpec = appResource.getStringArray(R.array.invoker_skills_specifications);
+                break;
+            case "Jakiro":
+                heroImage.setImageResource(R.drawable.jakiro);
+                heroLore.setText(appResource.getString(R.string.jakiro_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.dual_breath_icon, R.drawable.ice_path_icon, R.drawable.liquid_fire_icon, R.drawable.macropyre_icon};
+                skillNames = appResource.getStringArray(R.array.jakiro_skill_names);
+                skillDesc = appResource.getStringArray(R.array.jakiro_skill_description);
+                skillSpec = appResource.getStringArray(R.array.jakiro_skills_specifications);
+                break;
+            case "Keeper of the Light":
+                heroImage.setImageResource(R.drawable.keeper_of_the_light);
+                heroLore.setText(appResource.getString(R.string.keeper_of_the_light_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.illuminate_icon, R.drawable.mana_leak_icon, R.drawable.chakra_magic_icon, R.drawable.recall_icon, R.drawable.blinding_light_icon, R.drawable.spirit_form_icon, R.drawable.release_illuminate_icon, R.drawable.illuminate_spirit_form_icon};
+                skillNames = appResource.getStringArray(R.array.keeper_of_the_light_skill_names);
+                skillDesc = appResource.getStringArray(R.array.keeper_of_the_light_skill_description);
+                skillSpec = appResource.getStringArray(R.array.keeper_of_the_light_skills_specifications);
+                break;
+            case "Leshrac":
+                heroImage.setImageResource(R.drawable.leshrac);
+                heroLore.setText(appResource.getString(R.string.leshrac_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.split_earth_icon, R.drawable.diabolic_edict_icon, R.drawable.lightning_storm_icon, R.drawable.pulse_nova_icon};
+                skillNames = appResource.getStringArray(R.array.leshrac_skill_names);
+                skillDesc = appResource.getStringArray(R.array.leshrac_skill_description);
+                skillSpec = appResource.getStringArray(R.array.leshrac_skills_specifications);
+                break;
+            case "Lich":
+                heroImage.setImageResource(R.drawable.lich);
+                heroLore.setText(appResource.getString(R.string.lich_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.frost_blast_icon, R.drawable.ice_armor_icon, R.drawable.sacrifice_icon, R.drawable.chain_frost_icon};
+                skillNames = appResource.getStringArray(R.array.lich_skill_names);
+                skillDesc = appResource.getStringArray(R.array.lich_skill_description);
+                skillSpec = appResource.getStringArray(R.array.lich_skills_specifications);
+                break;
+            case "Lina":
+                heroImage.setImageResource(R.drawable.lina);
+                heroLore.setText(appResource.getString(R.string.lina_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.dragon_slave_icon, R.drawable.light_strike_array_icon, R.drawable.fiery_soul_icon, R.drawable.laguna_blade_icon};
+                skillNames = appResource.getStringArray(R.array.lina_skill_names);
+                skillDesc = appResource.getStringArray(R.array.lina_skill_description);
+                skillSpec = appResource.getStringArray(R.array.lina_skills_specifications);
+                break;
+            case "Lion":
+                heroImage.setImageResource(R.drawable.lion);
+                heroLore.setText(appResource.getString(R.string.lion_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.earth_spike_icon, R.drawable.hex_lion_icon, R.drawable.mana_drain_icon, R.drawable.finger_of_death_icon};
+                skillNames = appResource.getStringArray(R.array.lion_skill_names);
+                skillDesc = appResource.getStringArray(R.array.lion_skill_description);
+                skillSpec = appResource.getStringArray(R.array.lion_skills_specifications);
+                break;
+            case "Natures Prophet":
+                heroImage.setImageResource(R.drawable.natures_prophet);
+                heroLore.setText(appResource.getString(R.string.natures_prophet_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.sprout_icon, R.drawable.teleportation_icon, R.drawable.natures_call_icon, R.drawable.wrath_of_nature_icon};
+                skillNames = appResource.getStringArray(R.array.natures_prophet_skill_names);
+                skillDesc = appResource.getStringArray(R.array.natures_prophet_skill_description);
+                skillSpec = appResource.getStringArray(R.array.natures_prophet_skills_specifications);
+                break;
+            case "Necrophos":
+                heroImage.setImageResource(R.drawable.necrophos);
+                heroLore.setText(appResource.getString(R.string.necrophos_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.death_pulse_icon, R.drawable.heartstopper_aura_icon, R.drawable.sadist_icon, R.drawable.reapers_scythe_icon};
+                skillNames = appResource.getStringArray(R.array.necrophos_skill_names);
+                skillDesc = appResource.getStringArray(R.array.necrophos_skill_description);
+                skillSpec = appResource.getStringArray(R.array.necrophos_skills_specifications);
+                break;
+            case "Ogre Magi":
+                heroImage.setImageResource(R.drawable.ogre_magi);
+                heroLore.setText(appResource.getString(R.string.ogre_magi_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.fireblast_icon, R.drawable.ignite_icon, R.drawable.bloodlust_icon, R.drawable.multicast_icon};
+                skillNames = appResource.getStringArray(R.array.ogre_magi_skill_names);
+                skillDesc = appResource.getStringArray(R.array.ogre_magi_skill_description);
+                skillSpec = appResource.getStringArray(R.array.ogre_magi_skills_specifications);
+                break;
+            case "Oracle":
+                heroImage.setImageResource(R.drawable.oracle);
+                heroLore.setText(appResource.getString(R.string.oracle_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.fortunes_end_icon, R.drawable.fates_edict_icon, R.drawable.purifying_flames_icon, R.drawable.false_promise_icon};
+                skillNames = appResource.getStringArray(R.array.oracle_skill_names);
+                skillDesc = appResource.getStringArray(R.array.oracle_skill_description);
+                skillSpec = appResource.getStringArray(R.array.oracle_skills_specifications);
+                break;
+            case "Outworld Devourer":
+                heroImage.setImageResource(R.drawable.outworld_devourer);
+                heroLore.setText(appResource.getString(R.string.outworld_devourer_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.arcane_orb_icon, R.drawable.astral_imprisonment_icon, R.drawable.essence_aura_icon, R.drawable.sanitys_eclipse_icon};
+                skillNames = appResource.getStringArray(R.array.outworld_devourer_skill_names);
+                skillDesc = appResource.getStringArray(R.array.outworld_devourer_skill_description);
+                skillSpec = appResource.getStringArray(R.array.outworld_devourer_skills_specifications);
+                break;
+            case "Puck":
+                heroImage.setImageResource(R.drawable.puck);
+                heroLore.setText(appResource.getString(R.string.puck_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.illusory_orb_icon, R.drawable.waning_rift_icon, R.drawable.phase_shift_icon, R.drawable.ethereal_jaunt_icon, R.drawable.dream_coil_icon};
+                skillNames = appResource.getStringArray(R.array.puck_skill_names);
+                skillDesc = appResource.getStringArray(R.array.puck_skills_description);
+                skillSpec = appResource.getStringArray(R.array.puck_skill_specifications);
+                break;
+            case "Pugna":
+                heroImage.setImageResource(R.drawable.pugna);
+                heroLore.setText(appResource.getString(R.string.pugna_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.nether_blast_icon, R.drawable.decrepify_icon, R.drawable.nether_ward_icon, R.drawable.life_drain_icon};
+                skillNames = appResource.getStringArray(R.array.pugna_skill_names);
+                skillDesc = appResource.getStringArray(R.array.pugna_skills_description);
+                skillSpec = appResource.getStringArray(R.array.pugna_skill_specifications);
+                break;
+            case "Queen of Pain":
+                heroImage.setImageResource(R.drawable.queen_of_pain);
+                heroLore.setText(appResource.getString(R.string.queen_of_pain_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.shadow_strike_icon, R.drawable.blink_queen_of_pain_icon, R.drawable.scream_of_pain_icon, R.drawable.sonic_wave_icon};
+                skillNames = appResource.getStringArray(R.array.queen_of_pain_skill_names);
+                skillDesc = appResource.getStringArray(R.array.queen_of_pain_skill_description);
+                skillSpec = appResource.getStringArray(R.array.queen_if_pain_skills_specifications);
+                break;
             case "Rubick":
                 heroImage.setImageResource(R.drawable.rubick);
-                heroLore.setText("Any mage can cast a spell or two, and a few may even study long enough to become a wizard, but only the most talented are allowed to be recognized as a Magus. Yet as with any sorcerer’s circle, a sense of community has never guaranteed competitive courtesy.\n" +
-                        "Already a renowned duelist and scholar of the grander world of sorcery, it had never occurred to Rubick that he might perhaps be Magus material until he was in the midst of his seventh assassination attempt. As he casually tossed the twelfth of a string of would-be killers from a high balcony, it dawned on him how utterly unimaginative the attempts on his life had become. Where once the interruption of a fingersnap or firehand might have put a cheerful spring in his step, it had all become so very predictable. He craved greater competition. Therefore, donning his combat mask, he did what any wizard seeking to ascend the ranks would do: he announced his intention to kill a Magus.\n" +
-                        "\n" +
-                        "Rubick quickly discovered that to threaten one Magus is to threaten them all, and they fell upon him in force. Each antagonist's spell was an unstoppable torrent of energy, and every attack a calculated killing blow. But very soon something occurred that Rubick's foes found unexpected: their arts appeared to turn against them. Inside the magic maelstrom, Rubick chuckled, subtly reading and replicating the powers of one in order to cast it against another, sowing chaos among those who had allied against him. Accusations of betrayal began to fly, and soon the sorcerers turned one upon another without suspecting who was behind their undoing.\n" +
-                        "\n" +
-                        "When the battle finally drew to a close, all were singed and frozen, soaked and cut and pierced. More than one lay dead by an ally’s craft. Rubick stood apart, sore but delighted in the week’s festivities. None had the strength to argue when he presented his petition of assumption to the Hidden Council, and the Insubstantial Eleven agreed as one to grant him the title of Grand Magus.\n" +
-                        "\n");
+                heroLore.setText(appResource.getString(R.string.rubick_lore));
+                heroLore.setTextColor(Color.DKGRAY);
                 skillIcons = new int[]{R.drawable.telekinesis_icon, R.drawable.telekinesis_land_icon, R.drawable.fade_bolt_icon, R.drawable.null_field_icon, R.drawable.spell_steal_icon};
-                skillNames = new String[]{"Telekinesis", "Telekinesis Land", "Fade Bolt", "Null Field", "Spell Steal"};
-                skillDesc = new String[]{"Rubick uses his telekinetic powers to lift the enemy into the air briefly and then hurls them back at the ground. The unit lands on the ground with such force that it stuns nearby enemies.", "Chooses the location the target will land when Telekinesis finishes.", "Rubick creates a powerful stream of arcane energy that travels between enemy units, dealing damage and reducing their attack damage. Each jump deals less damage.", "Rubick's mastery of the arcane protects nearby allies against weaker magics, granting them magic resistance.", "Rubick studies the trace magical essence of one enemy hero, learning the secrets of the last spell the hero cast. Rubick can use this spell as his own for several minutes or until he dies. Upgradable by Aghanim's Scepter."};
-                skillSpec = new String[]{"ABILITY: UNIT TARGET\n" +
-                        "AFFECTS: ENEMY UNITS\n" +
-                        "PIERCES SPELL IMMUNITY: NO\n" +
-                        "LIFT DURATION: 1.5 / 1.75 / 2 / 2.25\n" +
-                        "STUN DURATION: 1 / 1.25 / 1.5 / 1.75\n" +
-                        "IMPACT RADIUS: 325 / 325 / 325 / 325\n" +
-                        "CAST RANGE: 550 / 575 / 600 / 625\n" + "Mana CostMANA COST: 120/120/120/120\n" +
-                        "CooldownCOOLDOWN: 22", "", "ABILITY: UNIT TARGET\n" +
-                        "AFFECTS: ENEMY UNITS\n" +
-                        "DAMAGE TYPE: MAGICAL\n" +
-                        "PIERCES SPELL IMMUNITY: NO\n" +
-                        "DAMAGE: 70 / 140 / 210 / 280\n" +
-                        "JUMP REDUCTION: 4% / 4% / 4% / 4%\n" +
-                        "HERO DAMAGE REDUCTION: 20 / 25 / 30 / 35\n" +
-                        "CREEP DAMAGE REDUCTION: 10 / 13 / 15 / 17\n" +
-                        "DEBUFF DURATION: 10 / 10 / 10 / 10\n" + "Mana CostMANA COST: 120/130/140/150\n" +
-                        "CooldownCOOLDOWN: 16/14/12/10", "ABILITY: PASSIVE\n" +
-                        "MAGIC RESISTANCE: 5% / 10% / 15% / 20%\n" +
-                        "RADIUS: 900", "ABILITY: UNIT TARGET\n" +
-                        "AFFECTS: ENEMY HEROES\n" +
-                        "PIERCES SPELL IMMUNITY: YES\n" +
-                        "DURATION: 180 / 240 / 300\n" +
-                        "SCEPTER COOLDOWN: 2\n" + "Mana CostMANA COST: 25/25/25\n" +
-                        "CooldownCOOLDOWN: 20/18/16"};
-
+                skillNames = appResource.getStringArray(R.array.rubick_skill_names);
+                skillDesc = appResource.getStringArray(R.array.rubick_skill_description);
+                skillSpec = appResource.getStringArray(R.array.rubick_skills_specifications);
                 break;
+            case "Silencer":
+                heroImage.setImageResource(R.drawable.silencer);
+                heroLore.setText(appResource.getString(R.string.silencer_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.arcane_curse_icon, R.drawable.glaives_of_wisdom_icon, R.drawable.last_word_icon, R.drawable.global_silence_icon};
+                skillNames = appResource.getStringArray(R.array.silencer_skill_names);
+                skillDesc = appResource.getStringArray(R.array.silencer_skill_description);
+                skillSpec = appResource.getStringArray(R.array.silencer_skills_specifications);
+                break;
+            case "Strom Spirit":
+                heroImage.setImageResource(R.drawable.storm_spirit);
+                heroLore.setText(appResource.getString(R.string.storm_spirit_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.static_remnant_icon, R.drawable.electric_vortex_icon, R.drawable.overload_icon, R.drawable.ball_lightning_icon};
+                skillNames = appResource.getStringArray(R.array.storm_spirit_skill_names);
+                skillDesc = appResource.getStringArray(R.array.storm_spirit_skill_description);
+                skillSpec = appResource.getStringArray(R.array.storm_spirit_skills_specifications);
+                break;
+            case "Shadow Demon":
+                heroImage.setImageResource(R.drawable.shadow_demon);
+                heroLore.setText(appResource.getString(R.string.shadow_demon_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.disruption_icon, R.drawable.soul_catcher_icon, R.drawable.shadow_poison_icon, R.drawable.shadow_poison_release_icon, R.drawable.demonic_purge_icon};
+                skillNames = appResource.getStringArray(R.array.shadow_demon_skill_names);
+                skillDesc = appResource.getStringArray(R.array.shadow_demon_skill_description);
+                skillSpec = appResource.getStringArray(R.array.shadow_demon_skills_specifications);
+                break;
+            case "Shadow Shaman":
+                heroImage.setImageResource(R.drawable.shadow_shaman);
+                heroLore.setText(appResource.getString(R.string.shadow_shaman_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.ether_shock_icon, R.drawable.hex_shadow_shaman_icon, R.drawable.shackles_icon, R.drawable.mass_serpent_ward_icon};
+                skillNames = appResource.getStringArray(R.array.shadow_shaman_skill_names);
+                skillDesc = appResource.getStringArray(R.array.shadow_shaman_skill_description);
+                skillSpec = appResource.getStringArray(R.array.shadow_shaman_skills_specifications);
+                break;
+            case "Tinker":
+                heroImage.setImageResource(R.drawable.tinker);
+                heroLore.setText(appResource.getString(R.string.tinker_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.laser_icon, R.drawable.heat_seeking_missile_icon, R.drawable.march_of_the_machines_icon, R.drawable.rearm_icon};
+                skillNames = appResource.getStringArray(R.array.tinker_skill_names);
+                skillDesc = appResource.getStringArray(R.array.tinker_skill_description);
+                skillSpec = appResource.getStringArray(R.array.tinker_skills_specifications);
+                break;
+            case "Warlock":
+                heroImage.setImageResource(R.drawable.warlock);
+                heroLore.setText(appResource.getString(R.string.warlock_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.fatal_bonds_icon, R.drawable.shadow_word_icon, R.drawable.upheaval_icon, R.drawable.chaotic_offering_icon};
+                skillNames = appResource.getStringArray(R.array.warlock_skill_names);
+                skillDesc = appResource.getStringArray(R.array.warlock_skill_description);
+                skillSpec = appResource.getStringArray(R.array.warlock_skills_specifications);
+                break;
+            case "Windranger":
+                heroImage.setImageResource(R.drawable.windranger);
+                heroLore.setText(appResource.getString(R.string.windranger_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.shackleshot_icon, R.drawable.powershot_icon, R.drawable.windrun_icon, R.drawable.focus_fire_icon};
+                skillNames = appResource.getStringArray(R.array.windranger_skill_names);
+                skillDesc = appResource.getStringArray(R.array.windranger_skill_description);
+                skillSpec = appResource.getStringArray(R.array.windranger_skills_specifications);
+                break;
+            case "Winter Wyvern":
+                heroImage.setImageResource(R.drawable.winter_wyvern);
+                heroLore.setText(appResource.getString(R.string.winter_wyvern_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.arctic_burn_icon, R.drawable.splinter_blast_icon, R.drawable.cold_embrace_icon, R.drawable.winters_curse_icon};
+                skillNames = appResource.getStringArray(R.array.winter_wyvern_skill_names);
+                skillDesc = appResource.getStringArray(R.array.winter_wyvern_skill_description);
+                skillSpec = appResource.getStringArray(R.array.winter_wyvern_skills_specifications);
+                break;
+            case "Witch Doctor":
+                heroImage.setImageResource(R.drawable.witch_doctor);
+                heroLore.setText(appResource.getString(R.string.witch_doctor_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.paralyzing_cask_icon, R.drawable.voodoo_restoration_icon, R.drawable.maledict_icon, R.drawable.death_ward_icon};
+                skillNames = appResource.getStringArray(R.array.witch_doctor_skill_names);
+                skillDesc = appResource.getStringArray(R.array.witch_doctor_skill_description);
+                skillSpec = appResource.getStringArray(R.array.witch_doctor_skills_specifications);
+                break;
+            case "Zeus":
+                heroImage.setImageResource(R.drawable.zeus);
+                heroLore.setText(appResource.getString(R.string.zeus_lore));
+                heroLore.setTextColor(Color.DKGRAY);
+                skillIcons = new int[]{R.drawable.arc_lightning_icon, R.drawable.lightning_bolt_icon, R.drawable.static_field_icon, R.drawable.thundergods_wrath_icon};
+                skillNames = appResource.getStringArray(R.array.zeus_skill_names);
+                skillDesc = appResource.getStringArray(R.array.zeus_skill_description);
+                skillSpec = appResource.getStringArray(R.array.zeus_skills_specifications);
+                break;
+
         }
 
     }
