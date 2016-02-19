@@ -26,6 +26,8 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import java.util.Arrays;
+
 public class Main extends ActionBarActivity {
 
     private ViewPager pager;
@@ -41,7 +43,7 @@ public class Main extends ActionBarActivity {
 
     public static TextView heroLore;
     public static ImageView heroImage;
-    public static ListView skillLV;
+//    public static ListView skillLV;
 
     public static Context applicationContext;
 
@@ -109,6 +111,29 @@ public class Main extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public static void tabsSlideIn() {
+        Log.d("TABS","IN SLIDE IN");
+        if (isTypeShown()) {
+            // Hide the panel
+            Animation topOut = AnimationUtils.loadAnimation(applicationContext,
+                    R.anim.top_out);
+            tabLayout.startAnimation(topOut);
+            tabLayout.setVisibility(View.GONE);
+        } else {
+            // Show the Panel
+//            Animation rightOut = AnimationUtils.loadAnimation(applicationContext,
+//                    R.anim.right_out);
+//
+//            tabLayout.startAnimation(rightOut);
+            tabLayout.setVisibility(View.VISIBLE);
+        }
+    }
+
+
+    private static boolean isTypeShown() {
+        return tabLayout.getVisibility() == View.VISIBLE;
+    }
+
     public static void slideIn() {
         if (!isPanelShown()) {
             // Show the panel
@@ -116,7 +141,7 @@ public class Main extends ActionBarActivity {
                     R.anim.right_in);
 
             heroPreview.startAnimation(rightIn);
-            tabLayout.setVisibility(View.GONE);
+            tabsSlideIn();
             heroPreview.setVisibility(View.VISIBLE);
         } else {
             // Hide the Panel
@@ -368,7 +393,7 @@ public class Main extends ActionBarActivity {
 
     public static void getHeroDetails(String hero) {
 
-        skillIcons = null;
+        heroIntro.removeAllViewsInLayout();
 
         switch (hero) {
             case "Ancient Apparition":
