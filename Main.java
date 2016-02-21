@@ -70,7 +70,9 @@ public class Main extends ActionBarActivity {
         pager = (ViewPager) findViewById(R.id.pager);
         pager.setAdapter(new pagerAdapter(getSupportFragmentManager()));
         tabLayout = (SlidingTabLayout) findViewById(R.id.tabs);
+        tabLayout.setDistributeEvenly(true);
         tabLayout.setViewPager(pager);
+        tabLayout.setSelectedIndicatorColors(Color.argb(255,211, 47, 47));
 
         //Setting Context
         Context appContext = getApplicationContext();
@@ -120,11 +122,6 @@ public class Main extends ActionBarActivity {
             tabLayout.startAnimation(topOut);
             tabLayout.setVisibility(View.GONE);
         } else {
-            // Show the Panel
-//            Animation rightOut = AnimationUtils.loadAnimation(applicationContext,
-//                    R.anim.right_out);
-//
-//            tabLayout.startAnimation(rightOut);
             tabLayout.setVisibility(View.VISIBLE);
         }
     }
