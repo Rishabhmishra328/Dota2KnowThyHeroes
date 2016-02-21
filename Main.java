@@ -26,6 +26,10 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.google.android.gms.analytics.GoogleAnalytics;
+import com.google.android.gms.analytics.HitBuilders;
+import com.google.android.gms.analytics.Tracker;
+
 import java.util.Arrays;
 
 public class Main extends ActionBarActivity {
@@ -51,6 +55,8 @@ public class Main extends ActionBarActivity {
 
     public static Resources appResource;
 
+    public static Tracker tracker;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,7 +78,13 @@ public class Main extends ActionBarActivity {
         tabLayout = (SlidingTabLayout) findViewById(R.id.tabs);
         tabLayout.setDistributeEvenly(true);
         tabLayout.setViewPager(pager);
-        tabLayout.setSelectedIndicatorColors(Color.argb(255,211, 47, 47));
+        tabLayout.setSelectedIndicatorColors(Color.argb(255, 211, 47, 47));
+
+        //Setting tracker
+        analytics application = (analytics) getApplication();
+        tracker = application.getDefaultTracker();
+        tracker.setScreenName("List");
+        tracker.send(new HitBuilders.ScreenViewBuilder().build());
 
         //Setting Context
         Context appContext = getApplicationContext();
@@ -91,6 +103,18 @@ public class Main extends ActionBarActivity {
             slideIn();
         } else
             super.onBackPressed();
+    }
+
+    @Override
+    protected void onStart() {
+        GoogleAnalytics.getInstance(Main.this).reportActivityStart(this);
+        super.onStart();
+    }
+
+    @Override
+    protected void onStop() {
+        GoogleAnalytics.getInstance(Main.this).reportActivityStart(this);
+        super.onStop();
     }
 
     @Override
@@ -424,10 +448,10 @@ public class Main extends ActionBarActivity {
                 heroImage.setImageResource(R.drawable.chen);
                 heroLore.setText(appResource.getString(R.string.chen_lore));
                 heroLore.setTextColor(Color.DKGRAY);
-                skillIcons = new int[]{R.drawable.arcane_orb_icon, R.drawable.astral_imprisonment_icon, R.drawable.essence_aura_icon, R.drawable.sanitys_eclipse_icon};
-                skillNames = appResource.getStringArray(R.array.outworld_devourer_skill_names);
-                skillDesc = appResource.getStringArray(R.array.outworld_devourer_skill_description);
-                skillSpec = appResource.getStringArray(R.array.outworld_devourer_skills_specifications);
+                skillIcons = new int[]{R.drawable.penitence_icon, R.drawable.test_of_faith_icon, R.drawable.test_of_faith_teleport_icon, R.drawable.holy_persuasion_icon, R.drawable.hand_of_god_icon};
+                skillNames = appResource.getStringArray(R.array.chen_skill_names);
+                skillDesc = appResource.getStringArray(R.array.chen_skill_description);
+                skillSpec = appResource.getStringArray(R.array.chen_skills_specifications);
                 break;
             case "Crystal Maiden":
                 heroImage.setImageResource(R.drawable.crystal_maiden);
@@ -577,7 +601,7 @@ public class Main extends ActionBarActivity {
                 heroImage.setImageResource(R.drawable.ogre_magi);
                 heroLore.setText(appResource.getString(R.string.ogre_magi_lore));
                 heroLore.setTextColor(Color.DKGRAY);
-                skillIcons = new int[]{R.drawable.fireblast_icon, R.drawable.ignite_icon, R.drawable.bloodlust_icon, R.drawable.multicast_icon};
+                skillIcons = new int[]{R.drawable.fireblast_icon, R.drawable.ignite_icon, R.drawable.bloodlust_icon,R.drawable.unrefined_fireblast_icon, R.drawable.multicast_icon};
                 skillNames = appResource.getStringArray(R.array.ogre_magi_skill_names);
                 skillDesc = appResource.getStringArray(R.array.ogre_magi_skill_description);
                 skillSpec = appResource.getStringArray(R.array.ogre_magi_skills_specifications);
@@ -645,7 +669,7 @@ public class Main extends ActionBarActivity {
                 skillDesc = appResource.getStringArray(R.array.silencer_skill_description);
                 skillSpec = appResource.getStringArray(R.array.silencer_skills_specifications);
                 break;
-            case "Strom Spirit":
+            case "Storm Spirit":
                 heroImage.setImageResource(R.drawable.storm_spirit);
                 heroLore.setText(appResource.getString(R.string.storm_spirit_lore));
                 heroLore.setTextColor(Color.DKGRAY);
@@ -1302,7 +1326,7 @@ public class Main extends ActionBarActivity {
                 skillDesc = appResource.getStringArray(R.array.tidehunter_skill_description);
                 skillSpec = appResource.getStringArray(R.array.tidehunter_skill_specifications);
                 break;
-            case "Doom":
+            case "Doom Bringer":
                 heroImage.setImageResource(R.drawable.doom_bringer);
                 heroLore.setText(appResource.getString(R.string.zeus_lore));
                 heroLore.setTextColor(Color.DKGRAY);
@@ -1320,7 +1344,7 @@ public class Main extends ActionBarActivity {
                 skillDesc = appResource.getStringArray(R.array.spirit_breaker_skill_description);
                 skillSpec = appResource.getStringArray(R.array.spirit_breaker_skill_specifications);
                 break;
-            case "Lycan":
+            case "Lycanthrope":
                 heroImage.setImageResource(R.drawable.lycan);
                 heroLore.setText(appResource.getString(R.string.lycan_lore));
                 heroLore.setTextColor(Color.DKGRAY);
