@@ -1,4 +1,4 @@
-package com.echo.primestudio.dota2knowthyheroes;
+package com.echo.primestudio.knowthyheroes;
 
 import android.content.Context;
 import android.graphics.Typeface;

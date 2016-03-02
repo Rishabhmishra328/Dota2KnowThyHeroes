@@ -1,5 +1,6 @@
-package com.echo.primestudio.dota2knowthyheroes;
+package com.echo.primestudio.knowthyheroes;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
@@ -10,7 +11,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.text.Layout;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -20,6 +21,7 @@ import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -29,8 +31,6 @@ import android.widget.TextView;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.HitBuilders;
 import com.google.android.gms.analytics.Tracker;
-
-import java.util.Arrays;
 
 public class Main extends ActionBarActivity {
 
@@ -94,6 +94,23 @@ public class Main extends ActionBarActivity {
         Resources res = getResources();
         appResource = res;
 
+        //Disclaimer
+        final Dialog disclaimerDialog = new Dialog(this);
+        disclaimerDialog.setContentView(R.layout.disclaimer);
+        disclaimerDialog.setTitle("Legal Disclaimer:");
+
+        disclaimerDialog.show();
+
+        Button disclaimerAcceptButton = (Button) disclaimerDialog.findViewById(R.id.disclaimer_button);
+        TextView disclaimerTV = (TextView) disclaimerDialog.findViewById(R.id.disclaimer_text);
+        disclaimerTV.setMovementMethod(new ScrollingMovementMethod());
+
+        disclaimerAcceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                disclaimerDialog.dismiss();
+            }
+        });
 
     }
 
@@ -601,7 +618,7 @@ public class Main extends ActionBarActivity {
                 heroImage.setImageResource(R.drawable.ogre_magi);
                 heroLore.setText(appResource.getString(R.string.ogre_magi_lore));
                 heroLore.setTextColor(Color.DKGRAY);
-                skillIcons = new int[]{R.drawable.fireblast_icon, R.drawable.ignite_icon, R.drawable.bloodlust_icon,R.drawable.unrefined_fireblast_icon, R.drawable.multicast_icon};
+                skillIcons = new int[]{R.drawable.fireblast_icon, R.drawable.ignite_icon, R.drawable.bloodlust_icon, R.drawable.unrefined_fireblast_icon, R.drawable.multicast_icon};
                 skillNames = appResource.getStringArray(R.array.ogre_magi_skill_names);
                 skillDesc = appResource.getStringArray(R.array.ogre_magi_skill_description);
                 skillSpec = appResource.getStringArray(R.array.ogre_magi_skills_specifications);

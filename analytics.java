@@ -1,11 +1,9 @@
-package com.echo.primestudio.dota2knowthyheroes;
+package com.echo.primestudio.knowthyheroes;
 
 import android.app.Application;
 
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
-
-import java.util.HashMap;
 
 /**
  * Created by Rishabh Mishra on 2/21/2016.
